@@ -1,0 +1,13 @@
+{
+  "fmt": {
+    "semiColons": false,
+    "singleQuote": true,
+    "exclude": ["README.md"]
+  },
+  "imports": {
+    "std/": "https://deno.land/std@0.195.0/"
+  },
+  "tasks": {
+    "dev": "deno run -A --watch=*.ts"
+  }
+}
