@@ -48,10 +48,11 @@ async function runPing(opt: PingOptions): Promise<void> {
   let connected = false
 
   Deno.addSignalListener('SIGINT', () => {
+    const total = passed + failed
+    const loss = failed / total * 100
     console.log()
-    console.log(`--- ${opt.host} (${hostIP}) port:${opt.port} tcping statistics ---`)
-    console.log(`    ${passed + failed} probes sent.`)
-    console.log(`    ${passed} successful, ${failed} failed.`)
+    console.log(`--- ${opt.host} (${hostIP}) port:${opt.port} TCP ping statistics ---`)
+    console.log(`${total} probes transmitted, ${passed} received, ${loss}% probe loss`)
     Deno.exit(0)
   })
 
@@ -68,7 +69,7 @@ async function runPing(opt: PingOptions): Promise<void> {
   }
 
   const banner = `${opt.host} (${hostIP})`
-  console.log(`Probing ${banner}...`)
+  console.log(`Probing ${banner} port:${opt.port}...`)
 
   for (let i = 0; i < opt.count; i++) {
     let encoder = new TextEncoder()
@@ -88,13 +89,18 @@ async function runPing(opt: PingOptions): Promise<void> {
       connected = false
       failed += 1
     } finally {
-      console.log(`${banner}: tcp_seq=${ctr}, connected=${connected}`)
+      console.log(`${banner}: tcp_seq=${ctr} connected=${connected}`)
       ctr += 1
     }
 
     // Wait 1 second before the next ping
     await new Promise((r) => setTimeout(r, 1000))
   }
+
+    const total = passed + failed
+    const loss = failed / total * 100
+    console.log(`--- ${opt.host} (${hostIP}) port:${opt.port} TCP ping statistics ---`)
+    console.log(`${total} probes transmitted, ${passed} received, ${loss}% probe loss`)
 }
 
 export async function ping(userArgs) {
