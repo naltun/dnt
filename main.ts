@@ -3,6 +3,17 @@ import { ping } from './ping.ts'
 
 const version = '0.1.0'
 
+function handleGlobalOpt(args) {
+  if (args.h || args.help) {
+    printUsageAndExit(0)
+  } else if (args.v || args.version) {
+    console.log(`dnt v${version}`)
+    Deno.exit(0)
+  } else {
+    printUsageAndExit(1)
+  }
+}
+
 function printUsageAndExit(exitcode: number) {
   console.log(`USAGE: dnt [ global options ] <command> [ options ] <host>
 
@@ -22,22 +33,13 @@ Tip: use -h with each command to learn more, e.g. \`dnt ping -h'`)
 }
 
 function main() {
-  const args = parse(Deno.args)
+  const userArgs = parse(Deno.args)
   // Parse and validate user-supplied arguments and options.
-  if (args._.length === 0) {
-    if (args.h || args.help) {
-      printUsageAndExit(0)
-    } else if (args.v || args.version) {
-      console.log(`dnt v${version}`)
-      Deno.exit(0)
-    } else {
-      printUsageAndExit(1)
-    }
-  }
+  if (userArgs._.length === 0) handleGlobalOpt(userArgs)
 
-  switch (args._[0]) {
+  switch (userArgs._[0]) {
     case 'ping':
-      ping(args)
+      ping(userArgs)
       break
     default:
       printUsageAndExit(1)
