@@ -40,13 +40,18 @@ OPTIONS
 }
 
 async function runPing(opt: PingOptions): Promise<void> {
-  let ctr = 0
+  let ctr = 1
+  let passed = 0
+  let failed = 0
   let conn
   let hostIP
-  let pingstats = ''
+  let connected = false
 
   Deno.addSignalListener('SIGINT', () => {
-    console.log(pingstats)
+    console.log()
+    console.log(`--- ${opt.host} (${hostIP}) port:${opt.port} tcping statistics ---`)
+    console.log(`    ${passed + failed} probes sent.`)
+    console.log(`    ${passed} successful, ${failed} failed.`)
     Deno.exit(0)
   })
 
@@ -68,16 +73,24 @@ async function runPing(opt: PingOptions): Promise<void> {
   for (let i = 0; i < opt.count; i++) {
     let encoder = new TextEncoder()
 
-    conn = await Deno.connect({
-      hostname: opt.host,
-      port: opt.port,
-      transport: 'tcp',
-    })
-    conn.write(encoder.encode('GET /'))
-    conn.close()
+    try {
+      conn = await Deno.connect({
+        hostname: opt.host,
+        port: opt.port,
+        transport: 'tcp',
+      })
+      await conn.write(encoder.encode('GET /'))
+      conn.close()
 
-    ctr += 1
-    console.log(`${banner}: tcp_seq=${ctr}`)
+      connected = true
+      passed += 1
+    } catch (ex) {
+      connected = false
+      failed += 1
+    } finally {
+      console.log(`${banner}: tcp_seq=${ctr}, connected=${connected}`)
+      ctr += 1
+    }
 
     // Wait 1 second before the next ping
     await new Promise((r) => setTimeout(r, 1000))
