@@ -7,14 +7,15 @@ function printUsageAndExit(exitcode: number) {
   console.log(`USAGE: dnt [ global options ] <command> [ options ] <host>
 
 DESCRIPTION
-  dnt (v${version}) is a collection of networking utilities for Deno. See COMMANDS for supported features.
-
-GLOBAL OPTIONS
-  -h, --help,         Print this help message
-  -v, --version,      Print dnt version
+  dnt (v${version}) is a collection of lightweight networking utilities.
+  See COMMANDS for supported features.
 
 COMMANDS:
   * ping
+
+GLOBAL OPTIONS
+  -h, --help          Print this help message
+  -v, --version       Print dnt version
 
 Tip: use -h with each command to learn more, e.g. \`dnt ping -h'`)
   Deno.exit(exitcode)
@@ -38,6 +39,8 @@ function main() {
     case 'ping':
       ping(args)
       break
+    default:
+      printUsageAndExit(1)
   }
 }
 

@@ -43,7 +43,7 @@ function printUsageAndExit(exitcode: number) {
   console.log(`USAGE: dnt ping [-hv] [-c <num>] [-p <num>] <host>
 
 DESCRIPTION
-  dnt-ping (v${version}) is a TCP ping utility that verifies whether a host is reachable.
+  dnt-ping (v${version}) is a TCP "ping" client that verifies whether a host is reachable.
 
 OPTIONS
   -c, --count <count> Send <count> pings and then stop
