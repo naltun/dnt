@@ -1,7 +1,7 @@
 import { parse } from 'std/flags/mod.ts'
 import { ping } from './ping.ts'
 
-const version = '0.1.0'
+const version = '0.1.1'
 
 function handleGlobalOpt(args) {
   if (args.h || args.help) {
