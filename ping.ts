@@ -34,8 +34,8 @@ function parsePingOptions(userArgs): PingOptions {
 
 function printStats() {
   const total = passed + failed
-  const loss = (failed / total * 100).toFixed(2)  // Round 2 decimal places
-  console.log(`--- ${opt.host} port:${opt.port} TCP ping statistics ---`)
+  const loss = (failed / total * 100).toFixed(2) // Round 2 decimal places
+  console.log(`\n--- ${opt.host} port:${opt.port} TCP ping statistics ---`)
   console.log(`${total} probes transmitted, ${passed} received, ${loss}% probe loss`)
 }
 
@@ -78,7 +78,7 @@ async function runPing(opt: PingOptions): Promise<void> {
   console.log(`Probing ${banner} port:${opt.port}...`)
 
   for (let i = 0; i < opt.count; i++) {
-    let encoder = new TextEncoder()
+    const encoder = new TextEncoder()
 
     try {
       conn = await Deno.connect({
@@ -91,7 +91,7 @@ async function runPing(opt: PingOptions): Promise<void> {
 
       connected = true
       passed += 1
-    } catch (ex) {
+    } catch (_ex) {
       connected = false
       failed += 1
     } finally {
