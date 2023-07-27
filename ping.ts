@@ -1,13 +1,13 @@
 const version = '0.1.0'
 
 // Global variables
-let opt
-let ctr = 1
-let passed = 0
-let failed = 0
 let conn
-let hostIP
 let connected = false
+let ctr = 1
+let failed = 0
+let hostIP
+let opt
+let passed = 0
 
 interface PingOptions {
   count?: number
@@ -34,8 +34,8 @@ function parsePingOptions(userArgs): PingOptions {
 
 function printStats() {
   const total = passed + failed
-  const loss = failed / total * 100
-  console.log(`--- ${opt.host} (${hostIP}) port:${opt.port} TCP ping statistics ---`)
+  const loss = (failed / total * 100).toFixed(2)  // Round 2 decimal places
+  console.log(`--- ${opt.host} port:${opt.port} TCP ping statistics ---`)
   console.log(`${total} probes transmitted, ${passed} received, ${loss}% probe loss`)
 }
 
@@ -43,7 +43,7 @@ function printUsageAndExit(exitcode: number) {
   console.log(`USAGE: dnt ping [-hv] [-c <num>] [-p <num>] <host>
 
 DESCRIPTION
-  dnt-ping (v${version}) is a TCP "ping" client that verifies whether a host is reachable.
+  dnt-ping (v${version}) is a TCP "ping" client that verifies whether a host is reachable or not.
 
 OPTIONS
   -c, --count <count> Send <count> pings and then stop
@@ -69,7 +69,8 @@ async function runPing(opt: PingOptions): Promise<void> {
       hostIP = '127.0.0.1'
       break
     default:
-      hostIP = await Deno.resolveDns(opt.host, 'A')
+      // resolveDns() returns Promise<string[]>, so let's use the A record at index 0.
+      hostIP = (await Deno.resolveDns(opt.host, 'A'))[0]
       break
   }
 

@@ -1,6 +1,6 @@
-# dnt (deno networking tools)
+# dnt (D networking tools)
 
-Networking utilities written with Deno.
+`dnt` is a collection of lightweight networking utilities.
 
 # LICENSE
 
