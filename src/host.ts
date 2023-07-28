@@ -33,13 +33,27 @@ OPTIONS
 }
 
 async function runHost(opt: HostOptions): Promise<void> {
+  // Gather records
   const a = await Deno.resolveDns(opt.host, 'A')
+    .then((r) => r)
+    .catch((err) => null)
   const aaaa = await Deno.resolveDns(opt.host, 'AAAA')
-  const mx = (await Deno.resolveDns(opt.host, 'MX'))[0]
+    .then((r) => r)
+    .catch((err) => null)
+  const mx = await Deno.resolveDns(opt.host, 'MX')
+    .then((r) => r[0])
+    .catch((err) => null)
 
-  if (a) console.log(`${opt.host} has address ${a}`)
-  if (aaaa) console.log(`${opt.host} has IPv6 address ${aaaa}`)
-  if (mx) console.log(`${opt.host} mail is handled by ${mx.preference} ${mx.exchange}`)
+  // Print records
+  if (a) {
+    a.forEach((ip) => console.log(`${opt.host} has address ${ip}`))
+  }
+  if (aaaa) {
+    aaaa.forEach((ip) => console.log(`${opt.host} has IPv6 address ${ip}`))
+  }
+  if (mx) {
+    console.log(`${opt.host} mail is handled by ${mx.preference} ${mx.exchange}`)
+  }
 }
 
 export async function host(userArgs) {
