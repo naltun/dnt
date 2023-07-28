@@ -1,4 +1,4 @@
-const version = '0.1.0'
+const version = '0.1.1'
 
 // Global variables
 let conn
@@ -91,9 +91,14 @@ async function runPing(opt: PingOptions): Promise<void> {
 
       connected = true
       passed += 1
-    } catch (_ex) {
-      connected = false
-      failed += 1
+    } catch (err) {
+      if (err.message.includes('Connection refused')) {
+        connected = false
+        failed += 1
+      } else {
+        console.log(`error: ${err.message}`)
+        Deno.exit(1)
+      }
     } finally {
       console.log(`${banner}: tcp_seq=${ctr} connected=${connected}`)
       ctr += 1
