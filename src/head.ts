@@ -1,6 +1,6 @@
 import { bold } from 'https://deno.land/std@0.195.0/fmt/colors.ts'
 
-const version = '0.1.0'
+const version = '0.1.1'
 
 interface HeadOptions {
   host: string
@@ -15,8 +15,13 @@ function parseHeadOpt(userArgs): HeadOptions {
   } else if (userArgs._.length !== 2) {
     printUsageAndExit(1)
   }
+
   let host = userArgs._[1]
-  host = `${host.startsWith('https://') ? '' : 'http://'}${host}` // HTTPS or HTTP?
+  if (!host.startsWith('https://')) {
+    if (!host.startsWith('http://')) {
+      host = `http://${host}` // Default to HTTP
+    }
+  }
 
   return {
     host: host,
@@ -46,10 +51,13 @@ async function runHead(opt): Promise<void> {
     // Check for refused connection
     if (err.message.includes('Connection refused')) {
       console.log(`Failed to connect to ${opt.host}: Couldn't connect to server`)
+    } else if (err.message.includes('dns error')) {
+      console.log(`Name or service not known: ${opt.host}`)
+      Deno.exit(1)
     } else {
       console.log(`error: ${err.message}`)
+      Deno.exit(1)
     }
-    Deno.exit(1)
   }
 }
 
