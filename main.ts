@@ -1,6 +1,6 @@
-import { head } from './head.ts'
+import { head } from './src/head.ts'
 import { parse } from 'https://deno.land/std@0.195.0/flags/mod.ts'
-import { ping } from './ping.ts'
+import { ping } from './src/ping.ts'
 
 const version = '0.2.0'
 
