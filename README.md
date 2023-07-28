@@ -2,6 +2,7 @@
 
 `dnt` is a collection of lightweight networking utilities. The collection currently includes:
 * head
+* host
 * ping
 
 <img src="./demo.png" />

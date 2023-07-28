@@ -1,8 +1,9 @@
 import { head } from './src/head.ts'
+import { host } from './src/host.ts'
 import { parse } from 'https://deno.land/std@0.195.0/flags/mod.ts'
 import { ping } from './src/ping.ts'
 
-const version = '0.2.0'
+const version = '0.3.0'
 
 function handleGlobalOpt(args) {
   if (args.h || args.help) {
@@ -43,6 +44,9 @@ if (import.meta.main) {
   switch (userArgs._[0]) {
     case 'head':
       head(userArgs)
+      break
+    case 'host':
+      host(userArgs)
       break
     case 'ping':
       ping(userArgs)
