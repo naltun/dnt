@@ -1,4 +1,5 @@
-import { parse } from 'std/flags/mod.ts'
+import { head } from './head.ts'
+import { parse } from 'https://deno.land/std@0.195.0/flags/mod.ts'
 import { ping } from './ping.ts'
 
 const version = '0.1.0'
@@ -32,7 +33,8 @@ Tip: use -h with each command to learn more, e.g. \`dnt ping -h'`)
   Deno.exit(exitcode)
 }
 
-function main() {
+// Enter main loop
+if (import.meta.main) {
   const userArgs = parse(Deno.args)
   // Parse and validate user-supplied arguments and options.
   if (userArgs._.length === 0) handleGlobalOpt(userArgs)
@@ -45,5 +47,3 @@ function main() {
       printUsageAndExit(1)
   }
 }
-
-main()
