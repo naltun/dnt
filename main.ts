@@ -2,7 +2,7 @@ import { head } from './head.ts'
 import { parse } from 'https://deno.land/std@0.195.0/flags/mod.ts'
 import { ping } from './ping.ts'
 
-const version = '0.1.0'
+const version = '0.2.0'
 
 function handleGlobalOpt(args) {
   if (args.h || args.help) {
@@ -23,6 +23,7 @@ DESCRIPTION
   See COMMANDS for supported features.
 
 COMMANDS:
+  * head
   * ping
 
 GLOBAL OPTIONS
@@ -40,6 +41,9 @@ if (import.meta.main) {
   if (userArgs._.length === 0) handleGlobalOpt(userArgs)
 
   switch (userArgs._[0]) {
+    case 'head':
+      head(userArgs)
+      break
     case 'ping':
       ping(userArgs)
       break
