@@ -4,5 +4,8 @@
     "semiColons": false,
     "singleQuote": true,
     "exclude": ["README.md"]
+  },
+  "tasks": {
+    "install": "deno install --allow-net --name dnt main.ts"
   }
 }
