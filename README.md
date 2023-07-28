@@ -4,6 +4,8 @@
 * head
 * ping
 
+<img src="./demo.png" />
+
 These tools might be useful for system administrators and developers troubleshooting network
 infrastructure, and will be familiar to users of Unix and the Windows command prompt.
 
