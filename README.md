@@ -7,8 +7,8 @@
 
 <img src="./demo.png" />
 
-These tools might be useful for system administrators and developers troubleshooting network
-infrastructure, and will be familiar to users of Unix and the Windows command prompt.
+These tools will be helpful when administrating networks, developing web applications,
+and conducting penetration tests.
 
 To get started, run:
 ```sh
