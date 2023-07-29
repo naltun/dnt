@@ -5,7 +5,7 @@
 * host
 * ping
 
-<img src="./demo.png" />
+<img src="./public/demo-01.png" />
 
 These tools will be helpful when administrating networks, developing web applications,
 and conducting penetration tests.
