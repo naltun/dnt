@@ -24,7 +24,7 @@ function printUsageAndExit(exitcode: number): void {
   console.log(`USAGE: dnt host [-hv] <host>
 
 DESCRIPTION
-  dnt-host (v${version}) is a DNS records lookup utility
+  dnt-host (v${version}) is a DNS records lookup utility.
 
 OPTIONS
   -h, --help          Print this help message
@@ -36,13 +36,13 @@ async function runHost(opt: HostOptions): Promise<void> {
   // Gather records
   const a = await Deno.resolveDns(opt.host, 'A')
     .then((r) => r)
-    .catch((err) => null)
+    .catch(() => null)
   const aaaa = await Deno.resolveDns(opt.host, 'AAAA')
     .then((r) => r)
-    .catch((err) => null)
+    .catch(() => null)
   const mx = await Deno.resolveDns(opt.host, 'MX')
     .then((r) => r[0])
-    .catch((err) => null)
+    .catch(() => null)
 
   // Print records
   if (a) {

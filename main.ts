@@ -25,6 +25,7 @@ DESCRIPTION
 
 COMMANDS:
   * head
+  * host
   * ping
 
 GLOBAL OPTIONS
