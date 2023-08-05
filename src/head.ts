@@ -1,6 +1,6 @@
 import { bold } from 'https://deno.land/std@0.195.0/fmt/colors.ts'
 
-const version = '0.1.1'
+const version = '0.1.2'
 
 interface HeadOptions {
   host: string
@@ -44,6 +44,7 @@ async function runHead(opt): Promise<void> {
   const initOpt = { method: 'HEAD', redirect: 'follow' }
   try {
     const resp = await fetch(opt.host, initOpt)
+    console.log(`${opt.host.split('://')[0].toUpperCase()} ${resp.status} ${resp.statusText}`)
     resp.headers.forEach((val, header) => {
       console.log(`${bold(header)}: ${val}`)
     })

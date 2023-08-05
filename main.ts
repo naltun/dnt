@@ -3,7 +3,7 @@ import { host } from './src/host.ts'
 import { parse } from 'https://deno.land/std@0.195.0/flags/mod.ts'
 import { ping } from './src/ping.ts'
 
-const version = '0.3.0'
+const version = '0.3.1'
 
 function handleGlobalOpt(args) {
   if (args.h || args.help) {
