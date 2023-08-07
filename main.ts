@@ -2,8 +2,9 @@ import { head } from './src/head.ts'
 import { host } from './src/host.ts'
 import { parse } from 'https://deno.land/std@0.195.0/flags/mod.ts'
 import { ping } from './src/ping.ts'
+import { proxy } from './src/proxy.ts'
 
-const version = '0.3.0'
+const version = '0.4.0'
 
 function handleGlobalOpt(args) {
   if (args.h || args.help) {
@@ -27,6 +28,7 @@ COMMANDS:
   * head
   * host
   * ping
+  * proxy
 
 GLOBAL OPTIONS
   -h, --help          Print this help message
@@ -51,6 +53,9 @@ if (import.meta.main) {
       break
     case 'ping':
       ping(userArgs)
+      break
+    case 'proxy':
+      proxy(userArgs)
       break
     default:
       printUsageAndExit(1)

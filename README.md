@@ -4,6 +4,7 @@
 * head
 * host
 * ping
+* proxy
 
 <img src="./public/demo-01.png" />
 
