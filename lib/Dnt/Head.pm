@@ -21,7 +21,7 @@ sub exec {
         my $headers = $response->{_headers}->as_string;
         $headers =~ s/Client-.*//g;
         $headers =~ s/\s+$//;
-	say $headers;
+        say $headers;
     }
 }
 
