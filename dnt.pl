@@ -5,7 +5,6 @@ use 5.030;
 use strict;
 use warnings;
 
-use Getopt::Std;
 use lib './lib/';
 use Dnt::Head;
 
