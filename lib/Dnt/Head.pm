@@ -21,7 +21,7 @@ sub exec {
         my $headers = $response->{_headers}->as_string;
 	# Remove LWP::Simple::head `Client-' headers
         $headers =~ s/Client-.*//g;
-	# Removing trailing whitespace
+	# Remove trailing whitespace
         $headers =~ s/\s+$//;
         say $headers;
     }
